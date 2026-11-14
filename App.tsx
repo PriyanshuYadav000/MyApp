@@ -6,6 +6,7 @@ import {SafeAreaProvider,SafeAreaView,
 import FlatCards from './Components/FlatCards';
 import ElevatedCard from './Components/ElevatedCard';
 import FancyCard from './Components/FancyCard';
+import ActionCard from './Components/ActionCard';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <FlatCards/>
         <ElevatedCard/>
         <FancyCard/>
+        <ActionCard/>
       </ScrollView>
     </SafeAreaView>
   )
