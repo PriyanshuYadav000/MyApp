@@ -5,6 +5,7 @@ import {SafeAreaProvider,SafeAreaView,
 } from 'react-native-safe-area-context';
 import FlatCards from './Components/FlatCards';
 import ElevatedCard from './Components/ElevatedCard';
+import FancyCard from './Components/FancyCard';
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <ScrollView>
         <FlatCards/>
         <ElevatedCard/>
+        <FancyCard/>
       </ScrollView>
     </SafeAreaView>
   )
