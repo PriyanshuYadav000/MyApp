@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
     Container: {
-    padding: 8,
+    padding: 10,
   },
     card: {
         flex : 1,
