@@ -81,15 +81,15 @@ class AppwriteService {
         }
     }
 
-    // async logout(){
-    //     try{
-    //         return await this.account.deleteSession({
-    //         sessionId: 'current'
-    //     });
-    //     }catch(error){
-    //         console.log("sucessfully logout"+ error ); 
-    //     }
-    // }
+    async logout(){
+        try{
+            return await this.account.deleteSession({
+            sessionId: 'current'
+        });
+        }catch(error){
+            console.log("sucessfully logout"+ error ); 
+        }
+    }
 }
 
 
