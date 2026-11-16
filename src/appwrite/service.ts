@@ -55,23 +55,23 @@ class AppwriteService {
             }
         }
 
-    // async login({email,password} : LoginUserAccount) {
+    async login({email,password} : LoginUserAccount) {
 
-    //     try {
-    //         return await this.account.createEmailPasswordSession({
-    //             email,
-    //             password
-    //     })
+        try {
+            return await this.account.createEmailPasswordSession({
+                email,
+                password
+        })
 
-    //     } catch(error) {
-    //         Snackbar.show({
-    //             text : String(error),
-    //             duration: Snackbar.LENGTH_LONG,
-    //         })
-    //         console.log("login App crashed "+ error );
-    //     }
+        } catch(error) {
+            Snackbar.show({
+                text : String(error),
+                duration: Snackbar.LENGTH_LONG,
+            })
+            console.log("login App crashed "+ error );
+        }
 
-    // }
+    }
 
     // async getCurrentUser(){
     //     try{
