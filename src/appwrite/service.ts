@@ -73,13 +73,13 @@ class AppwriteService {
 
     }
 
-    // async getCurrentUser(){
-    //     try{
-    //         return await this.account.get()
-    //     }catch(error){
-    //         console.log("did not able to get user "+ error ); 
-    //     }
-    // }
+    async getCurrentUser(){
+        try{
+            return await this.account.get()
+        }catch(error){
+            console.log("did not able to get user "+ error ); 
+        }
+    }
 
     // async logout(){
     //     try{
