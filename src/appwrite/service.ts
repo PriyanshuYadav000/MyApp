@@ -93,3 +93,7 @@ class AppwriteService {
 }
 
 
+
+// const Appwrite = new AppwriteService();
+
+export default AppwriteService;
