@@ -1,12 +1,195 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext, useState } from 'react';
 
-export default function login() {
-  return (
-    <View>
-      <Text>login</Text>
-    </View>
-  )
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+    Alert,
+    ActivityIndicator,
+} from 'react-native';
+
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+import { AppwriteContext } from '../appwrite/AppwriteContext';
+import type { AuthStackParamList } from '../routes/authStack';
+
+type LoginNavigationProp = NativeStackNavigationProp<
+    AuthStackParamList,
+    'login'
+>;
+
+export default function Login() {
+
+    const context = useContext(AppwriteContext);
+
+    const navigation = useNavigation<LoginNavigationProp>();
+
+    // States
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    if (!context) {
+        throw new Error('Login must be inside AppwriteProvider');
+    }
+
+    const { appwrite, setIsLoggedIn } = context;
+
+    // Login Function
+    const handleLogin = () => {
+
+        if (!email.trim() || !password) {
+            Alert.alert('Error', 'Please fill in all fields');
+            return;
+        }
+
+        setLoading(true);
+
+        appwrite.login({
+            email: email.trim(),
+            password,
+        })
+            .then((response) => {
+
+                if (response) {
+                    setIsLoggedIn(true);
+                } else {
+                    Alert.alert('Login Failed', 'Invalid email or password');
+                }
+
+            })
+            .catch((error) => {
+                Alert.alert('Login Failed', String(error));
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
+    return (
+        <View style={styles.container}>
+
+            <Text style={styles.title}>Welcome Back!</Text>
+
+            <Text style={styles.subtitle}>
+                Login to your account
+            </Text>
+
+            {/* Email Input */}
+            <TextInput
+                style={styles.input}
+                placeholder="Email Address"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+            />
+
+            {/* Password Input */}
+            <TextInput
+                style={styles.input}
+                placeholder="Password"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+            />
+
+            {/* Login Button */}
+            <TouchableOpacity
+                style={styles.button}
+                onPress={handleLogin}
+                disabled={loading}
+            >
+                {loading ? (
+                    <ActivityIndicator color="#fff" />
+                ) : (
+                    <Text style={styles.buttonText}>Login</Text>
+                )}
+            </TouchableOpacity>
+
+            {/* Navigate to Signup */}
+            <View style={styles.footer}>
+
+                <Text style={styles.footerText}>
+                    Don't have an account?
+                </Text>
+
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('signup')}
+                >
+                    <Text style={styles.link}> Sign Up</Text>
+                </TouchableOpacity>
+
+            </View>
+
+        </View>
+    );
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+    container: {
+        flex: 1,
+        backgroundColor: '#F8FAFC',
+        justifyContent: 'center',
+        padding: 25,
+    },
+
+    title: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        color: '#1E293B',
+        marginBottom: 8,
+    },
+
+    subtitle: {
+        fontSize: 16,
+        color: '#64748B',
+        marginBottom: 35,
+    },
+
+    input: {
+        backgroundColor: '#FFFFFF',
+        borderWidth: 1,
+        borderColor: '#E2E8F0',
+        padding: 16,
+        borderRadius: 12,
+        marginBottom: 18,
+        fontSize: 16,
+        color: '#1E293B',
+    },
+
+    button: {
+        backgroundColor: '#2563EB',
+        padding: 17,
+        borderRadius: 12,
+        alignItems: 'center',
+        marginTop: 10,
+    },
+
+    buttonText: {
+        color: '#FFFFFF',
+        fontSize: 17,
+        fontWeight: 'bold',
+    },
+
+    footer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 25,
+    },
+
+    footerText: {
+        color: '#64748B',
+        fontSize: 15,
+    },
+
+    link: {
+        color: '#2563EB',
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
+});
